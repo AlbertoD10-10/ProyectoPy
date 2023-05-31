@@ -73,6 +73,8 @@ def secuencial(file1,file2):
     print("\nEl archivo se leyo en(s):", end - start)
 
 def main():
+    start = time.time()
+    
     argumentos = sys.argv
     print(argumentos)
 
@@ -84,6 +86,8 @@ def main():
         secuencial(argumentos[2], argumentos[3])
     else:
         paralelo(argumentos[1], argumentos[2])
+    end = time.time()
+    print("El tiempo total de ejecucion es(s):", end - start)
 
 
 if __name__ == '__main__':
