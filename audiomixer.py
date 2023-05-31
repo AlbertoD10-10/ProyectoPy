@@ -71,8 +71,8 @@ def paralelo():
     
     # Obtener la lista de rutas de las canciones
     canciones_paths = [
-        "files/dross.mp3",
-        "files/september.mp3",
+        "files/acapella.mp3",
+        "files/instrumental.mp3",
         
 
 
