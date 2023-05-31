@@ -2,6 +2,9 @@ from pydub import AudioSegment
 import multiprocessing as mp
 import time
 import numpy as np
+import os
+import sys
+
 ganancia = 0.5
 
 def leer_cancion(cancion_path):
@@ -54,22 +57,23 @@ def combinar_canciones(canciones):
 
 
     # Guardar la canción combinada en un archivo MP3
-    resultado_audio.export("files/f3.mp3", format='mp3')
+    resultado_audio.export("audio_combinado.mp3", format='mp3')
     print("combinacion exitosa")
     end = time.time()
     print("Las canciones se combinaron en(s):", end - start)
 
 
 
-def paralelo():
+def paralelo(file1,file2):
     
     
     # Obtener la lista de rutas de las canciones
     canciones_paths = [
-        "files/acapella.mp3",
-        "files/instrumental.mp3",
+        file1,
+        file2,
     ]
-
+#    cores = os.cpu_count()
+#    print("Su máquina tiene", cores, "cores.")
 
 
     # Crear el objeto Pool con la cantidad de procesos deseados
@@ -82,14 +86,14 @@ def paralelo():
         pool.join()
 
     # Combinar las canciones
-    res = mp.Process(target=combinar_canciones,args=(canciones,))
-    res.run()
+        res = mp.Process(target=combinar_canciones,args=(canciones,))
+        res.run()
 
-def secuencial():
-    start = time.time()
+def secuencial(file1,file2):
+
     canciones_paths = [
-        "files/dross.mp3",
-        "files/september.mp3"
+        file1,
+        file2
     ]
     audio1 = leer_cancion(canciones_paths[0])
     audio2 = leer_cancion(canciones_paths[1])
@@ -98,13 +102,24 @@ def secuencial():
     canciones = [audio1,audio2]
     combinar_canciones(canciones)
     end = time.time()
-    print("\nEl archivo se leyo en(s):", end - start)
 
 def main():
     start = time.time()
-    paralelo()
+
+    # Recuperar los argumentos de línea de comandos
+    argumentos = sys.argv
+    print(argumentos)
+
+    # Comprobar si se proporcionaron suficientes argumentos
+    if len(argumentos) < 3:
+        print("Se requieren al menos 2 archivo para realizar la mezcla")
+        sys.exit(1)
+    elif argumentos[1] == "-s":
+        secuencial(argumentos[2], argumentos[3])
+    else:
+        paralelo(argumentos[1], argumentos[2])
     end = time.time()
-    print("El tiempo total es(s):", end - start)
+    print("El tiempo total de ejecucion es(s):", end - start)
 
 
 if __name__ == '__main__':

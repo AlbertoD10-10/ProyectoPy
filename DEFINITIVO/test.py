@@ -31,13 +31,13 @@ def paralelo(file_1, file_2):
     
     start = time.time()
 
-    path_1 = "files/"+file_1
-    path_2 = "files/"+file_2
+    #path_1 = "files/"+file_1
+    #path_2 = "files/"+file_2
 
     # Obtener la lista de rutas de las canciones
     canciones_paths = [
-        path_1,
-        path_2
+        file_1,
+        file_2
     ]
 
 
@@ -64,14 +64,13 @@ def paralelo(file_1, file_2):
 def secuencial(file_1, file_2):
     start = time.time()
 
-    path_1 = "files/"+file_1
-    path_2 = "files/"+file_2
+
     #canciones_paths = [
     #    "files/Duvet.mp3",
     #    "files/UN_OWEN_WAS_HER.mp3"
     #]
-    audio1 = leer_cancion(path_1)
-    audio2 = leer_cancion(path_2)
+    audio1 = leer_cancion(file_1)
+    audio2 = leer_cancion(file_2)
     #audio3 = leer_cancion(canciones_paths[2])
     #audio4 = leer_cancion(canciones_paths[3])
     print("¡Las lecturas se han ejecutado de manera secuencial!")
