@@ -9,6 +9,7 @@ def leer_cancion(cancion_path):
     return cancion
 
 def combinar_canciones(canciones):
+    start = time.time()
     
     # Combinar las canciones
     listaCanciones = list(canciones)
@@ -22,14 +23,16 @@ def combinar_canciones(canciones):
 
 
     # Guardar la canción combinada en un archivo MP3
-    cancion_combinada.export("f5.mp3", format='mp3')
-    print("combinaciom exitosa")
+    cancion_combinada.export("files/f3.mp3", format='mp3')
+    print("combinacion exitosa")
+    end = time.time()
+    print("Las canciones se combinaron en(s):", end - start)
 
 
 
 def paralelo():
     
-    start = time.time()
+    
     # Obtener la lista de rutas de las canciones
     canciones_paths = [
         
@@ -47,21 +50,20 @@ def paralelo():
     # Leer las canciones en paralelo utilizando pool.map()
         canciones = pool.imap_unordered(leer_cancion, canciones_paths)
         print("Las lecturas se han ejecutado en paralelo")
+        pool.close()
+        pool.join()
 
     # Combinar las canciones
-        pool.imap(combinar_canciones, canciones)
+        #pool.imap(combinar_canciones, canciones)
         #combinar_canciones(canciones)
-    end = time.time()
-    print("\nEl archivo se leyo en(s):", end - start)
+    res = mp.Process(target=combinar_canciones,args=(canciones,))
+    res.run()
 
 def secuencial():
     start = time.time()
     canciones_paths = [
         "files/dross.mp3",
-        "files/september.mp3",
-        "files/Duvet.mp3",
-        "files/UN_OWEN_WAS_HER.mp3"
-
+        "files/september.mp3"
     ]
     audio1 = leer_cancion(canciones_paths[0])
     audio2 = leer_cancion(canciones_paths[1])
@@ -72,7 +74,11 @@ def secuencial():
     print("\nEl archivo se leyo en(s):", end - start)
 
 def main():
-    paralelo()
+    start = time.time()
+    secuencial()
+    end = time.time()
+    print("El tiempo total es(s):", end - start)
 
-if _name_ == '_main_':
+
+if __name__ == '__main__':
     main()

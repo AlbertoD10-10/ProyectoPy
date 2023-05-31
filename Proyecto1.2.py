@@ -54,8 +54,8 @@ def mezclar_audios(audio1, audio2, ganancia):
     return resultado_audio
 
 # Ejemplo de uso
-audio1_path = "/home/simon/dev/organizacion_computadores/proyecto_audio2/files/dross.mp3"
-audio2_path = "/home/simon/dev/organizacion_computadores/proyecto_audio2/files/september.mp3"
+audio1_path = "files/dross.mp3"
+audio2_path = "files/september.mp3"
 ganancia = 0.2  # Ajusta el valor de la ganancia según tus necesidades
 
 audio_resultante = mezclar_audios(audio1_path, audio2_path, ganancia)
