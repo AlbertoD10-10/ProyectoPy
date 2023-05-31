@@ -22,25 +22,20 @@ def combinar_canciones(canciones):
     sizearrayaudio1 = len(arrayaudio1)
     sizearrayaudio2 = len(arrayaudio2)
     
-    print("duracion audio1: ",sizearrayaudio1)
-    print("duracion audio2: ",sizearrayaudio2)
+
     
     if(sizearrayaudio1 > sizearrayaudio2):   
-        longer = listaCanciones[0]
-        shorter = listaCanciones[1]
+
         for i in range(sizearrayaudio1-sizearrayaudio2):
             arrayaudio2.append(0)
-        print("duracion audio1: ",len(arrayaudio1))
-        print("duracion audio2: ",len(arrayaudio2))
+
         
         
     else:
-        longer = listaCanciones[1]
-        shorter = listaCanciones[0]
+
         for i in range(sizearrayaudio2-sizearrayaudio1):
             arrayaudio1.append(0)
-        print("duracion audio1: ",len(arrayaudio1))
-        print("duracion audio2: ",len(arrayaudio2))
+
 
     temp = np.array(arrayaudio1)
     for i in range(len(temp)):
@@ -73,9 +68,6 @@ def paralelo():
     canciones_paths = [
         "files/acapella.mp3",
         "files/instrumental.mp3",
-        
-
-
     ]
 
 
@@ -90,8 +82,6 @@ def paralelo():
         pool.join()
 
     # Combinar las canciones
-        #pool.imap(combinar_canciones, canciones)
-        #combinar_canciones(canciones)
     res = mp.Process(target=combinar_canciones,args=(canciones,))
     res.run()
 
@@ -103,6 +93,7 @@ def secuencial():
     ]
     audio1 = leer_cancion(canciones_paths[0])
     audio2 = leer_cancion(canciones_paths[1])
+
 
     canciones = [audio1,audio2]
     combinar_canciones(canciones)
