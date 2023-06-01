@@ -13,7 +13,7 @@ def leer_cancion(cancion_path):
 
     return cancion
 
-def combinar_canciones(canciones):
+def combinar_canciones(canciones, name):
     start = time.time()
     
     # Combinar las canciones
@@ -57,14 +57,14 @@ def combinar_canciones(canciones):
 
 
     # Guardar la canción combinada en un archivo MP3
-    resultado_audio.export("audio_combinado.mp3", format='mp3')
+    resultado_audio.export(name, format='mp3')
     print("combinacion exitosa")
     end = time.time()
     print("Las canciones se combinaron en(s):", end - start)
 
 
 
-def paralelo(file1,file2):
+def paralelo(file1,file2,name):
     
     
     # Obtener la lista de rutas de las canciones
@@ -86,10 +86,10 @@ def paralelo(file1,file2):
         pool.join()
 
     # Combinar las canciones
-        res = mp.Process(target=combinar_canciones,args=(canciones,))
+        res = mp.Process(target=combinar_canciones,args=(canciones,name))
         res.run()
 
-def secuencial(file1,file2):
+def secuencial(file1,file2,name):
 
     canciones_paths = [
         file1,
@@ -100,12 +100,13 @@ def secuencial(file1,file2):
 
 
     canciones = [audio1,audio2]
-    combinar_canciones(canciones)
+    combinar_canciones(canciones, name)
     end = time.time()
+
+
 
 def main():
     start = time.time()
-
     # Recuperar los argumentos de línea de comandos
     argumentos = sys.argv
     print(argumentos)
@@ -115,11 +116,21 @@ def main():
         print("Se requieren al menos 2 archivo para realizar la mezcla")
         sys.exit(1)
     elif argumentos[1] == "-s":
-        secuencial(argumentos[2], argumentos[3])
+        if len(argumentos) == 5:
+            secuencial(argumentos[2], argumentos[3], argumentos[4])
+        elif len(argumentos) == 4:
+            secuencial(argumentos[2], argumentos[3], "audio_mixer.mp3")
+
     else:
-        paralelo(argumentos[1], argumentos[2])
+        if len(argumentos) == 4:
+            paralelo(argumentos[1], argumentos[2], argumentos[3])
+        elif len(argumentos) == 3:
+            paralelo(argumentos[1], argumentos[2], "audio_mixer.mp3")
     end = time.time()
     print("El tiempo total de ejecucion es(s):", end - start)
+
+
+
 
 
 if __name__ == '__main__':
