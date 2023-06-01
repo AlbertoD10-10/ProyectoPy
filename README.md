@@ -1,7 +1,7 @@
 # ProyectoPy
 Proyecto final Organizacion de Computadores
 
-# Tutorial para correr el programa:
+## Tutorial para correr el programa:
 Se debe tener instalado la libreria de python "pydub" y la aplicaion de "ffmpeg".
 Existen dos versiones del programa, en la primera version hacemos la mezcla manualmente, sumando bit por bit los dos archivos de audio y multiplicandolo por la ganancia. En la segunda version usamos la funcion de pydub "overlay)
 para hacer la mezcla.
